@@ -5,12 +5,29 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
+import { fetchUsers } from "./features/users/usersSlice";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { fetchPosts } from "./features/posts/postsSlice";
+// import { apiSlice } from "./features/api/apiSlice";
+// import { ApiProvider } from "@reduxjs/toolkit/query/react";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
+store.dispatch(fetchPosts());
+store.dispatch(fetchUsers());
+
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+    {/* <ApiProvider api={apiSlice}> */}
+      <Router>
+        <Routes>
+          <Route path="/*" element={<App />} />
+        </Routes>
+      </Router>
+    {/* </ApiProvider> */}
     </Provider>
   </React.StrictMode>
 );
